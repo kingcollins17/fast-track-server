@@ -1,1 +1,1 @@
-mysql --user avnadmin --password=AVNS_gJLSj3UKmGO_i-sugTx --host default-16182271-collinsdev24-9c40.f.aivencloud.com --port 24772 defaultdb
+mysql --user avnadmin --password=AVNS_gJLSj3UKmGO_i-sugTx --host default-16182271-collinsdev24-9c40.f.aivencloud.com --port 24772
