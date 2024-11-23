@@ -1,0 +1,1 @@
+env\scripts\activate && fastapi dev src/app.py --port 80

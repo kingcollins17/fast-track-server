@@ -1,5 +1,14 @@
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Generic, TypeVar
 import pydantic
+from datetime import datetime
+
+T = TypeVar("T")
+
+
+class ResponseModel(pydantic.BaseModel, Generic[T]):
+    detail: str = "Request successful"
+    data: T | None = None
+    request_at: datetime = datetime.now()
 
 
 class Account(pydantic.BaseModel):

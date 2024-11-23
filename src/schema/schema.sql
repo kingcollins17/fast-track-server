@@ -26,6 +26,7 @@ CREATE TABLE `accounts` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `fullname` varchar(255) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
   `fcm_reg_token` varchar(1024) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -430,4 +431,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-22 14:05:17
+-- Dump completed on 2024-11-22 14:12:45
