@@ -9,6 +9,3 @@ MYSQL_DB = "fast_track_db"
 MYSQL_USER = os.getenv("MYSQL_USER", "root")
 MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "mysqlking@02")
 SECRET_KEY = os.getenv("SECRET_KEY")
-
-
-print(SECRET_KEY)
