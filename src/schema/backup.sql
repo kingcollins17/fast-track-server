@@ -40,6 +40,16 @@ CREATE TABLE `accounts` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `accounts`
+--
+
+LOCK TABLES `accounts` WRITE;
+/*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
+INSERT INTO `accounts` VALUES (1,'dev99','dev99@gmail.com',NULL,'$2b$12$5L/j5gggEW3wNDmNjBhHReUrMWkFOSr4DATf6p8aeNggTf5nK3Q9a',1,1,NULL,'2024-11-22 17:11:06','2024-11-22 17:11:06'),(2,'user365','user@example.com','Example User','$2b$12$Dj/d2nw1QPAP8XMe7q3W9.eLvri/W3naCyBvxJfoIbb4FXm3vK27e',1,1,NULL,'2024-11-24 13:15:35','2024-11-24 13:15:35');
+/*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `comment_tags`
 --
 
@@ -58,6 +68,15 @@ CREATE TABLE `comment_tags` (
   CONSTRAINT `comment_tags_ibfk_2` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comment_tags`
+--
+
+LOCK TABLES `comment_tags` WRITE;
+/*!40000 ALTER TABLE `comment_tags` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comment_tags` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `comments`
@@ -88,6 +107,15 @@ CREATE TABLE `comments` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `comments`
+--
+
+LOCK TABLES `comments` WRITE;
+/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `features`
 --
 
@@ -109,6 +137,15 @@ CREATE TABLE `features` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `features`
+--
+
+LOCK TABLES `features` WRITE;
+/*!40000 ALTER TABLE `features` DISABLE KEYS */;
+/*!40000 ALTER TABLE `features` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `issue_dependencies`
 --
 
@@ -128,6 +165,15 @@ CREATE TABLE `issue_dependencies` (
   CONSTRAINT `issue_dependencies_ibfk_2` FOREIGN KEY (`depended_issue_id`) REFERENCES `issues` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `issue_dependencies`
+--
+
+LOCK TABLES `issue_dependencies` WRITE;
+/*!40000 ALTER TABLE `issue_dependencies` DISABLE KEYS */;
+/*!40000 ALTER TABLE `issue_dependencies` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `issues`
@@ -154,6 +200,15 @@ CREATE TABLE `issues` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `issues`
+--
+
+LOCK TABLES `issues` WRITE;
+/*!40000 ALTER TABLE `issues` DISABLE KEYS */;
+/*!40000 ALTER TABLE `issues` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `member_roles`
 --
 
@@ -171,6 +226,16 @@ CREATE TABLE `member_roles` (
   CONSTRAINT `member_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `organization_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `member_roles`
+--
+
+LOCK TABLES `member_roles` WRITE;
+/*!40000 ALTER TABLE `member_roles` DISABLE KEYS */;
+INSERT INTO `member_roles` VALUES (3,7,7);
+/*!40000 ALTER TABLE `member_roles` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `organization_members`
@@ -191,6 +256,16 @@ CREATE TABLE `organization_members` (
   CONSTRAINT `organization_members_ibfk_2` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `organization_members`
+--
+
+LOCK TABLES `organization_members` WRITE;
+/*!40000 ALTER TABLE `organization_members` DISABLE KEYS */;
+INSERT INTO `organization_members` VALUES (7,2,9,'2024-11-24 16:08:19');
+/*!40000 ALTER TABLE `organization_members` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `organization_roles`
@@ -220,6 +295,16 @@ CREATE TABLE `organization_roles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `organization_roles`
+--
+
+LOCK TABLES `organization_roles` WRITE;
+/*!40000 ALTER TABLE `organization_roles` DISABLE KEYS */;
+INSERT INTO `organization_roles` VALUES (7,'admin',1,1,1,1,1,1,1,1,'2024-11-24 14:09:12','2024-11-24 14:09:12',9);
+/*!40000 ALTER TABLE `organization_roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `organizations`
 --
 
@@ -240,6 +325,16 @@ CREATE TABLE `organizations` (
   CONSTRAINT `organizations_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `organizations`
+--
+
+LOCK TABLES `organizations` WRITE;
+/*!40000 ALTER TABLE `organizations` DISABLE KEYS */;
+INSERT INTO `organizations` VALUES (9,'Snapnet','standard',100,4,1,'2024-11-24 14:09:12','2024-11-24 14:09:12');
+/*!40000 ALTER TABLE `organizations` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -290,6 +385,15 @@ CREATE TABLE `projects` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `projects`
+--
+
+LOCK TABLES `projects` WRITE;
+/*!40000 ALTER TABLE `projects` DISABLE KEYS */;
+/*!40000 ALTER TABLE `projects` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `task_dependencies`
 --
 
@@ -309,6 +413,15 @@ CREATE TABLE `task_dependencies` (
   CONSTRAINT `task_dependencies_ibfk_2` FOREIGN KEY (`depended_task_id`) REFERENCES `tasks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `task_dependencies`
+--
+
+LOCK TABLES `task_dependencies` WRITE;
+/*!40000 ALTER TABLE `task_dependencies` DISABLE KEYS */;
+/*!40000 ALTER TABLE `task_dependencies` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `task_requirements`
@@ -331,6 +444,15 @@ CREATE TABLE `task_requirements` (
   CONSTRAINT `task_requirements_ibfk_2` FOREIGN KEY (`assignee_id`) REFERENCES `accounts` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `task_requirements`
+--
+
+LOCK TABLES `task_requirements` WRITE;
+/*!40000 ALTER TABLE `task_requirements` DISABLE KEYS */;
+/*!40000 ALTER TABLE `task_requirements` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `tasks`
@@ -358,6 +480,15 @@ CREATE TABLE `tasks` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `tasks`
+--
+
+LOCK TABLES `tasks` WRITE;
+/*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `team_members`
 --
 
@@ -378,6 +509,15 @@ CREATE TABLE `team_members` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `team_members`
+--
+
+LOCK TABLES `team_members` WRITE;
+/*!40000 ALTER TABLE `team_members` DISABLE KEYS */;
+/*!40000 ALTER TABLE `team_members` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `teams`
 --
 
@@ -396,6 +536,15 @@ CREATE TABLE `teams` (
   CONSTRAINT `fk_teams_projects` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `teams`
+--
+
+LOCK TABLES `teams` WRITE;
+/*!40000 ALTER TABLE `teams` DISABLE KEYS */;
+/*!40000 ALTER TABLE `teams` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -406,4 +555,4 @@ CREATE TABLE `teams` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-24 17:34:46
+-- Dump completed on 2024-11-24 17:34:45

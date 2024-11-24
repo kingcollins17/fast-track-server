@@ -10,3 +10,9 @@ def example_response(
             "content": {"application/json": {"example": example}},
         },
     }
+
+
+def page_offset(page: int, per_page: int):
+    if page < 0:
+        return 0
+    return (page - 1) * per_page

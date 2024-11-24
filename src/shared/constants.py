@@ -4,6 +4,7 @@ from src import *
 
 class Tags(Enum):
     accounts_mgt = "Accounts & Management"
+    organization = "Organization Management"
 
 
 class Mode(Enum):

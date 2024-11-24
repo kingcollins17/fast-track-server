@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta, timezone
-from typing import Annotated
+from typing import Annotated, Dict, List
 
 import jwt
 from fastapi import Depends, FastAPI, HTTPException, status
@@ -22,6 +22,25 @@ class Token(BaseModel):
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/accounts/oauth_token")
+
+
+def hash_string(value: str) -> str:
+    return pwd_context.hash(value)
+
+
+def verify_hash(plain: str, hashed: str) -> bool:
+    return pwd_context.verify(plain, hashed)
+
+
+def convert_jwt(data: dict, expires_delta: timedelta | None = None) -> str:
+    to_encode = data.copy()
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+
+def decode_jwt(token: str) -> Dict:
+    payload: Dict = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    return payload
 
 
 def verify_password(plain_password, hashed_password):
