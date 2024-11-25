@@ -72,8 +72,6 @@ async def authorize_swagger(
     conn: Annotated[aiomysql.Connection, Depends(connection)],
 ) -> Token:
     account = await fetch_account(conn, username=form_data.username.strip())
-    print(form_data.username)
-    print(account)
     if not account:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
