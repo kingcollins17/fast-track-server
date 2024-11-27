@@ -21,7 +21,7 @@ class Token(BaseModel):
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/accounts/oauth_token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/accounts/oauth-token")
 
 
 def hash_string(value: str) -> str:

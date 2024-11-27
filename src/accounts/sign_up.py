@@ -10,7 +10,7 @@ class SignUpPayload(BaseModel):
     password: str | None = None
 
 
-@router.post("/sign_up")
+@router.post("/sign-up")
 async def sign_up(
     data: SignUpPayload,
     conn: Annotated[aiomysql.Connection, Depends(connection)],

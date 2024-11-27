@@ -67,7 +67,7 @@ async def send_organization_invite(
         )
 
 
-@router.post("/accept_invite")
+@router.post("/accept-invite")
 async def accept_organization_invite(
     organization_id: int,
     invite_key: str,

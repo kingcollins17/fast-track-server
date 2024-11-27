@@ -10,7 +10,7 @@ class SignInPayload(BaseModel):
     google_id: str | None = None
 
 
-@router.post("/sign_in")
+@router.post("/sign-in")
 async def sign_in(
     data: SignInPayload,
     conn: Annotated[aiomysql.Connection, Depends(connection)],
@@ -66,7 +66,7 @@ async def sign_in(
         )
 
 
-@router.post("/oauth_token")
+@router.post("/oauth-token")
 async def authorize_swagger(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     conn: Annotated[aiomysql.Connection, Depends(connection)],
