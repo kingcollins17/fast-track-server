@@ -9,12 +9,13 @@ async def create_organization_db(
     owner_id: int,
     name: str,
     org_type: str = "default",
-):
+) -> int | None:
     query = "INSERT INTO organizations (organization_name, type, owner_id) VALUES (%s, %s, %s)"
     args = (name, org_type, owner_id)
     async with conn.cursor() as cursor:
         await cursor.execute(query, args)
         await conn.commit()
+        return cursor.lastrowid
 
 
 async def find_organization_db(

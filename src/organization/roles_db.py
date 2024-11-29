@@ -6,32 +6,26 @@ async def create_organization_role_db(
     conn: aiomysql.Connection,
     org_id: int,
     role_name: str,
-    # role permissions
-    can_assign_tasks: bool = False,
-    can_review_tasks: bool = False,
-    can_create_issue: bool = False,
-    can_create_feature: bool = False,
-    can_create_teams: bool = False,
-    can_assign_to_teams: bool = False,
-    can_assign_roles: bool = False,
+    can_manage_teams: bool = False,
+    can_manage_projects: bool = False,
+    can_manage_tasks: bool = False,
+    can_manage_roles: bool = False,
     can_send_invites: bool = False,
 ):
-    query = "INSERT INTO organization_roles (organization_id, role, can_assign_tasks, can_review_tasks, can_create_issue, can_create_feature, can_create_teams, can_assign_to_teams, can_assign_roles, can_send_invites) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    query = "INSERT INTO organization_roles (organization_id, role, can_manage_teams, can_manage_projects, can_manage_tasks, can_manage_roles, can_send_invites) VALUES (%s, %s, %s, %s, %s, %s, %s)"
     args = (
         org_id,
         role_name,
-        can_assign_tasks,
-        can_review_tasks,
-        can_create_issue,
-        can_create_feature,
-        can_create_teams,
-        can_assign_to_teams,
-        can_assign_roles,
+        can_manage_teams,
+        can_manage_projects,
+        can_manage_tasks,
+        can_manage_roles,
         can_send_invites,
     )
     async with conn.cursor() as cursor:
         await cursor.execute(query, args)
         await conn.commit()
+        return cursor.lastrowid
 
 
 async def fetch_organization_roles_db(conn: aiomysql.Connection, organization_id: int):
@@ -86,3 +80,4 @@ async def assign_member_role_db(
     async with conn.cursor(aiomysql.DictCursor) as cursor:
         await cursor.execute(query, args)
         await conn.commit()
+        return cursor.lastrowid

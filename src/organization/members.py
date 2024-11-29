@@ -2,7 +2,7 @@ from pydantic import EmailStr
 from pydantic_core import Url
 
 from . import *
-from src.db import fetch_account
+from src.db import *
 
 router = APIRouter(prefix="/members", tags=["Organization Members Management"])
 
@@ -176,18 +176,15 @@ async def remove_organization_member(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="The person you want to remove is not part of this organization",
         )
-    roles = await fetch_member_assigned_roles_db(conn, member_id)
-    is_admin = False
-    for role in roles:
-        print(role)
-        if role["role"] == "admin":
-            is_admin = True
-            break
-
-    if not is_admin:
+    roles = await fetch_member_assigned_roles_db(
+        conn,
+        member["id"],
+        organization_id=organization_id,
+    )
+    if not role_has_permission(roles, "can_manage_teams"):
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="You are not authorized to remove this member",
+            status_code=401,
+            detail="You are authorized to remove someone from this Organization",
         )
 
     await delete_organization_member_db(conn, organization_id, member_id=member["id"])

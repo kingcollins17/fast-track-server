@@ -36,7 +36,7 @@ CREATE TABLE `accounts` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +45,7 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (1,'dev99','dev99@gmail.com',NULL,'$2b$12$5L/j5gggEW3wNDmNjBhHReUrMWkFOSr4DATf6p8aeNggTf5nK3Q9a',1,1,NULL,'2024-11-22 17:11:06','2024-11-22 17:11:06'),(2,'user365','user@example.com','Example User','$2b$12$Dj/d2nw1QPAP8XMe7q3W9.eLvri/W3naCyBvxJfoIbb4FXm3vK27e',1,1,NULL,'2024-11-24 13:15:35','2024-11-24 13:15:35'),(3,'techie99','techie99@gmail.com','Dev Techie','$2b$12$oU3YvPjuCOKCT7ndVcr45uhZwf2EojWiTHU9WDYXtmyBTWD.YFMfK',1,1,NULL,'2024-11-25 12:49:57','2024-11-25 12:49:57'),(5,'jondoe','jondoe@gmail.com.com','John Doe','$2b$12$JU4C55qtDj5pLQ5gbWxJDeqw8Xjag.6o8PwHOxxMoc/oBXY/WvCCC',1,1,NULL,'2024-11-25 12:53:47','2024-11-25 12:53:47');
+INSERT INTO `accounts` VALUES (6,'techie99','techie99@gmail.com','Collins Nnanna','$2b$12$6HaHG0sz/qHWddAk.t2Bt.mrngFr0bXKe48lce8dga3/YikzAx0Mm',1,1,NULL,'2024-11-29 14:49:51','2024-11-29 14:49:51');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,7 +224,7 @@ CREATE TABLE `member_roles` (
   KEY `role_id` (`role_id`),
   CONSTRAINT `member_roles_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `organization_members` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `member_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `organization_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -233,7 +233,7 @@ CREATE TABLE `member_roles` (
 
 LOCK TABLES `member_roles` WRITE;
 /*!40000 ALTER TABLE `member_roles` DISABLE KEYS */;
-INSERT INTO `member_roles` VALUES (3,7,7),(4,8,8),(5,9,9),(9,11,11),(10,11,14),(11,12,14);
+INSERT INTO `member_roles` VALUES (13,13,16);
 /*!40000 ALTER TABLE `member_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -254,7 +254,7 @@ CREATE TABLE `organization_members` (
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `organization_members_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `organization_members_ibfk_2` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,7 +263,7 @@ CREATE TABLE `organization_members` (
 
 LOCK TABLES `organization_members` WRITE;
 /*!40000 ALTER TABLE `organization_members` DISABLE KEYS */;
-INSERT INTO `organization_members` VALUES (7,2,9,'2024-11-24 16:08:19'),(8,3,10,'2024-11-25 12:50:50'),(9,3,11,'2024-11-25 12:51:24'),(10,3,12,'2024-11-25 12:51:39'),(11,2,10,'2024-11-25 12:56:37'),(12,5,10,'2024-11-25 12:57:33');
+INSERT INTO `organization_members` VALUES (13,6,13,'2024-11-29 14:50:16');
 /*!40000 ALTER TABLE `organization_members` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -277,13 +277,10 @@ DROP TABLE IF EXISTS `organization_roles`;
 CREATE TABLE `organization_roles` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `role` varchar(100) NOT NULL DEFAULT 'default',
-  `can_create_issue` tinyint(1) NOT NULL DEFAULT '0',
-  `can_assign_tasks` tinyint(1) NOT NULL DEFAULT '0',
-  `can_review_tasks` tinyint(1) NOT NULL DEFAULT '0',
-  `can_create_feature` tinyint(1) NOT NULL DEFAULT '0',
-  `can_create_teams` tinyint(1) NOT NULL DEFAULT '0',
-  `can_assign_to_teams` tinyint(1) NOT NULL DEFAULT '0',
-  `can_assign_roles` tinyint(1) NOT NULL DEFAULT '0',
+  `can_manage_teams` tinyint(1) NOT NULL DEFAULT '0',
+  `can_manage_projects` tinyint(1) NOT NULL DEFAULT '0',
+  `can_manage_tasks` tinyint(1) NOT NULL DEFAULT '0',
+  `can_manage_roles` tinyint(1) NOT NULL DEFAULT '0',
   `can_send_invites` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -291,7 +288,7 @@ CREATE TABLE `organization_roles` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `organization_roles_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -300,7 +297,7 @@ CREATE TABLE `organization_roles` (
 
 LOCK TABLES `organization_roles` WRITE;
 /*!40000 ALTER TABLE `organization_roles` DISABLE KEYS */;
-INSERT INTO `organization_roles` VALUES (7,'admin',1,1,1,1,1,1,1,1,'2024-11-24 14:09:12','2024-11-24 14:09:12',9),(8,'admin',1,1,1,1,1,1,1,1,'2024-11-25 12:50:50','2024-11-25 12:50:50',10),(9,'admin',1,1,1,1,1,1,1,1,'2024-11-25 12:51:24','2024-11-25 12:51:24',11),(10,'admin',1,1,1,1,1,1,1,1,'2024-11-25 12:51:39','2024-11-25 12:51:39',12),(11,'junior',0,0,0,0,0,0,0,0,'2024-11-25 13:03:15','2024-11-25 13:03:15',10),(12,'intern',0,0,0,0,0,0,0,0,'2024-11-25 13:03:25','2024-11-25 13:03:25',10),(13,'senior',0,0,1,0,0,0,0,0,'2024-11-25 13:03:39','2024-11-25 13:03:39',10),(14,'designer',0,0,0,0,0,0,0,0,'2024-11-25 13:03:49','2024-11-25 13:03:49',10),(15,'frontend',0,0,0,0,0,0,0,0,'2024-11-25 13:03:57','2024-11-25 13:03:57',10);
+INSERT INTO `organization_roles` VALUES (16,'admin',1,1,1,1,1,'2024-11-29 14:50:16','2024-11-29 14:50:16',13),(17,'Intern',0,0,0,0,0,'2024-11-29 14:55:18','2024-11-29 14:55:18',13);
 /*!40000 ALTER TABLE `organization_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -323,7 +320,7 @@ CREATE TABLE `organizations` (
   PRIMARY KEY (`id`),
   KEY `owner_id` (`owner_id`),
   CONSTRAINT `organizations_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -332,7 +329,7 @@ CREATE TABLE `organizations` (
 
 LOCK TABLES `organizations` WRITE;
 /*!40000 ALTER TABLE `organizations` DISABLE KEYS */;
-INSERT INTO `organizations` VALUES (9,'Snapnet','standard',100,4,1,'2024-11-24 14:09:12','2024-11-24 14:09:12'),(10,'Paybigi','standard',100,4,3,'2024-11-25 12:50:50','2024-11-25 12:50:50'),(11,'Ultracut','standard',100,4,3,'2024-11-25 12:51:24','2024-11-25 12:51:24'),(12,'Uber Ltd','standard',100,4,3,'2024-11-25 12:51:39','2024-11-25 12:51:39');
+INSERT INTO `organizations` VALUES (13,'Zidepeople','enterprise',100,4,6,'2024-11-29 14:50:16','2024-11-29 14:50:16');
 /*!40000 ALTER TABLE `organizations` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -344,12 +341,12 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE TRIGGER `CreateAdminRole` AFTER INSERT ON `organizations` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `CreateAdminRole` AFTER INSERT ON `organizations` FOR EACH ROW BEGIN
      DECLARE role_id INT;
      DECLARE member_id INT;
      INSERT INTO 
-          organization_roles (role, can_create_issue, can_assign_tasks, can_review_tasks, can_create_feature, can_create_teams, can_assign_to_teams, can_assign_roles,can_send_invites, organization_id )
-         VALUES ('admin', TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE, NEW.id);
+          organization_roles (role, can_manage_teams, can_manage_projects, can_manage_tasks, can_manage_roles, can_send_invites, organization_id )
+         VALUES ('admin', TRUE,TRUE,TRUE,TRUE,TRUE, NEW.id);
      SET role_id = LAST_INSERT_ID();
      INSERT INTO organization_members (account_id, organization_id) VALUES (NEW.owner_id, NEW.id);
      SET member_id = LAST_INSERT_ID();
@@ -372,16 +369,14 @@ DROP TABLE IF EXISTS `projects`;
 CREATE TABLE `projects` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `project_name` varchar(255) DEFAULT NULL,
-  `max_issue_per_feature` int unsigned NOT NULL DEFAULT '100',
-  `max_teams` int unsigned NOT NULL DEFAULT '4',
-  `max_team_members` int unsigned NOT NULL DEFAULT '4',
+  `deadline` datetime NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `organization_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -555,4 +550,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-25 13:29:46
+-- Dump completed on 2024-11-29 15:04:32

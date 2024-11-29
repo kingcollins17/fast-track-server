@@ -105,7 +105,17 @@ async def fetch_member_organizations(
         )
 
 
-@router.post("/create")
+@router.post(
+    "/create",
+    responses=example_response(
+        status=200,
+        example={
+            "detail": "You have created a new organization Zidepeople",
+            "data": {"organization_id": 13},
+            "request_at": "2024-11-29T14:43:44.921923",
+        },
+    ),
+)
 async def create_organization(
     name: str,
     account: Annotated[Dict, Depends(get_current_user)],
@@ -114,8 +124,17 @@ async def create_organization(
 ) -> ResponseModel:
     """Create a new organization"""
     try:
-        await create_organization_db(conn, account["id"], name=name, org_type=type)
-        return ResponseModel(detail=f"You have created a new organization {name}")
+        org_id = await create_organization_db(
+            conn,
+            account["id"],
+            name=name,
+            org_type=type,
+        )
+        assert org_id is not None
+        return ResponseModel(
+            detail=f"You have created a new organization {name}",
+            data={"organization_id": org_id},
+        )
     except Exception as e:
         if isinstance(e, HTTPException):
             raise e

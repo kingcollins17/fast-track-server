@@ -5,6 +5,7 @@ from src.shared import *
 
 from src.accounts.accounts import accounts
 from src.organization.organization import org
+from src.project.project import project
 
 middleware = [
     Middleware(
@@ -31,3 +32,4 @@ app = FastAPI(
 
 app.include_router(accounts)
 app.include_router(org)
+app.include_router(project)

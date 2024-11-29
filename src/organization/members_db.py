@@ -42,7 +42,7 @@ async def add_organization_member_db(
     conn: aiomysql.Connection,
     org_id: int,
     account_id: int,
-):
+) -> int | None:
     query = (
         "INSERT INTO organization_members (account_id, organization_id) VALUES (%s, %s)"
     )
@@ -50,6 +50,7 @@ async def add_organization_member_db(
     async with conn.cursor() as cursor:
         await cursor.execute(query, args)
         await conn.commit()
+        return cursor.lastrowid
 
 
 async def delete_organization_member_db(

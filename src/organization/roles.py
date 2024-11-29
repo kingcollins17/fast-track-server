@@ -6,13 +6,10 @@ router = APIRouter(prefix="/roles", tags=["Organization Roles"])
 
 class OrgRole(BaseModel):
     role: str
-    can_assign_tasks: bool = False
-    can_review_tasks: bool = False
-    can_create_issue: bool = False
-    can_create_feature: bool = False
-    can_create_teams: bool = False
-    can_assign_to_teams: bool = False
-    can_assign_roles: bool = False
+    can_manage_teams: bool = False
+    can_manage_projects: bool = False
+    can_manage_tasks: bool = False
+    can_manage_roles: bool = False
     can_send_invites: bool = False
 
 
@@ -40,13 +37,10 @@ async def create_organization_role(
             conn,
             organization_id,
             role_name=data.role,
-            can_assign_tasks=data.can_assign_tasks,
-            can_assign_roles=data.can_assign_roles,
-            can_create_feature=data.can_create_issue,
-            can_create_issue=data.can_create_issue,
-            can_review_tasks=data.can_review_tasks,
-            can_create_teams=data.can_create_teams,
-            can_assign_to_teams=data.can_assign_to_teams,
+            can_manage_projects=data.can_manage_projects,
+            can_manage_tasks=data.can_manage_tasks,
+            can_manage_teams=data.can_manage_teams,
+            can_manage_roles=data.can_manage_roles,
             can_send_invites=data.can_send_invites,
         )
         return ResponseModel(
@@ -67,19 +61,22 @@ async def create_organization_role(
     responses=example_response(
         status=200,
         example={
-            "id": 8,
-            "role": "admin",
-            "can_create_issue": True,
-            "can_assign_tasks": True,
-            "can_review_tasks": True,
-            "can_create_feature": True,
-            "can_create_teams": True,
-            "can_assign_to_teams": True,
-            "can_assign_roles": True,
-            "can_send_invites": True,
-            "created_at": "2024-11-25T12:50:50",
-            "updated_at": "2024-11-25T12:50:50",
-            "organization_id": 10,
+            "detail": "Request successful",
+            "data": [
+                {
+                    "id": 16,
+                    "role": "admin",
+                    "can_manage_teams": True,
+                    "can_manage_projects": True,
+                    "can_manage_tasks": True,
+                    "can_manage_roles": True,
+                    "can_send_invites": True,
+                    "created_at": "2024-11-29T14:50:16",
+                    "updated_at": "2024-11-29T14:50:16",
+                    "organization_id": 13,
+                }
+            ],
+            "request_at": "2024-11-29T14:51:56.457965",
         },
     ),
 )
