@@ -111,7 +111,10 @@ async def accept_organization_invite(
         member_id = await create_organization_member_db(conn, org_id, account["id"])
         assert member_id is not None, "Member id cannot be None"
         await assign_member_role_db(conn, member_id, role_id)
-        return ResponseModel(detail="You are now a member of this organization")
+        return ResponseModel(
+            detail="You are now a member of this organization",
+            data={"organization_id": org_id},
+        )
     except IntegrityError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="You are already a member"
