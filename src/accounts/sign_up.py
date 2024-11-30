@@ -13,7 +13,7 @@ class SignUpPayload(BaseModel):
 @router.post("/sign-up")
 async def sign_up(
     data: SignUpPayload,
-    conn: Annotated[aiomysql.Connection, Depends(connection)],
+    conn: Annotated[aiomysql.Connection, Depends(db_connection)],
 ) -> ResponseModel:
     try:
         await create_account_db(

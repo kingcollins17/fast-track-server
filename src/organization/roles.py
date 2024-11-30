@@ -18,7 +18,7 @@ async def create_organization_role(
     organization_id: int,
     data: OrgRole,
     account: Annotated[Dict, Depends(get_current_user)],
-    conn: Annotated[aiomysql.Connection, Depends(connection)],
+    conn: Annotated[aiomysql.Connection, Depends(db_connection)],
 ):
     try:
         organization = await find_organization_db(conn, organization_id)
@@ -83,7 +83,7 @@ async def create_organization_role(
 async def fetch_organizations_roles(
     organization_id: int,
     account: Annotated[Dict, Depends(get_current_user)],
-    conn: Annotated[aiomysql.Connection, Depends(connection)],
+    conn: Annotated[aiomysql.Connection, Depends(db_connection)],
 ) -> ResponseModel[List[Dict]]:
     try:
         data = await fetch_organization_roles_db(conn, organization_id)
@@ -101,7 +101,7 @@ async def fetch_organizations_roles(
 async def fetch_assigned_roles(
     organization_id: int,
     account: Annotated[Dict, Depends(get_current_user)],
-    conn: Annotated[aiomysql.Connection, Depends(connection)],
+    conn: Annotated[aiomysql.Connection, Depends(db_connection)],
     member_id: int | None = None,
 ):
     """Your roles in this organization
@@ -136,7 +136,7 @@ async def fetch_assigned_roles(
 async def assign_member_role(
     organization_id: int,
     account: Annotated[Dict, Depends(get_current_user)],
-    conn: Annotated[aiomysql.Connection, Depends(connection)],
+    conn: Annotated[aiomysql.Connection, Depends(db_connection)],
     member_id: int,
     role_id: int,
 ):

@@ -38,7 +38,7 @@ async def find_organization_member_db(
         return await cursor.fetchone()
 
 
-async def add_organization_member_db(
+async def create_organization_member_db(
     conn: aiomysql.Connection,
     org_id: int,
     account_id: int,

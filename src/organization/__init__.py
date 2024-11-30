@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from pymysql.err import IntegrityError, DataError
 from src.models import *
 from src.shared import *
+from src.dependencies import *
 from .db import *
 from .roles_db import *
 from .members_db import *

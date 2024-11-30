@@ -65,3 +65,14 @@ async def fetch_projects_db(
     async with conn.cursor(aiomysql.DictCursor) as cursor:
         await cursor.execute(query, args)
         return await cursor.fetchall()
+
+
+async def fetch_project_details_db(
+    conn: aiomysql.Connection,
+    project_id: int,
+) -> Dict | None:
+    query = "SELECT * FROM projects LEFT JOIN organizations ON projects.organization_id=organizations.id WHERE projects.id=%s"
+    args = (project_id,)
+    async with conn.cursor(aiomysql.DictCursor) as cursor:
+        await cursor.execute(query, args)
+        return await cursor.fetchone()

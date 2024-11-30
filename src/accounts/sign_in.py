@@ -13,7 +13,7 @@ class SignInPayload(BaseModel):
 @router.post("/sign-in")
 async def sign_in(
     data: SignInPayload,
-    conn: Annotated[aiomysql.Connection, Depends(connection)],
+    conn: Annotated[aiomysql.Connection, Depends(db_connection)],
 ) -> ResponseModel[Token]:
     try:
         username = None
@@ -69,7 +69,7 @@ async def sign_in(
 @router.post("/oauth-token")
 async def authorize_swagger(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-    conn: Annotated[aiomysql.Connection, Depends(connection)],
+    conn: Annotated[aiomysql.Connection, Depends(db_connection)],
 ) -> Token:
     account = await fetch_account(conn, username=form_data.username.strip())
     if not account:

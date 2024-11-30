@@ -6,6 +6,8 @@ from src.shared import *
 from src.accounts.accounts import accounts
 from src.organization.organization import org
 from src.project.project import project
+from src.teams.teams import teams
+from src.feature.feature import feature
 
 middleware = [
     Middleware(
@@ -26,6 +28,18 @@ app = FastAPI(
             "name": Tags.accounts_mgt,
             "description": "All accounts creation and managment operations",
         },
+        {
+            "name": Tags.organization,
+            "description": "Organization Management Endpoints",
+        },
+        {
+            "name": Tags.project,
+            "description": "Projects Mangement endpoints",
+        },
+        {
+            "name": Tags.teams,
+            "description": "Team Management Endpoints",
+        },
     ],
     middleware=middleware,
 )
@@ -33,3 +47,5 @@ app = FastAPI(
 app.include_router(accounts)
 app.include_router(org)
 app.include_router(project)
+app.include_router(teams)
+app.include_router(feature)

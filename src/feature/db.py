@@ -1,0 +1,71 @@
+import aiomysql
+from typing import List, Any, Dict, Tuple
+from datetime import datetime
+
+
+async def create_feature_db(
+    conn: aiomysql.Connection,
+    name: str,
+    deadline: datetime,
+    project_id: int,
+    description: str = "",
+) -> int | None:
+    query = "INSERT INTO features (name, description, deadline, project_id) VALUES (%s, %s, %s, %s)"
+    args = (name, description, deadline, project_id)
+    async with conn.cursor() as cursor:
+        await cursor.execute(query, args)
+        await conn.commit()
+        return cursor.lastrowid
+
+
+async def fetch_features_db(
+    conn: aiomysql.Connection,
+    project_id: int,
+) -> List[Dict]:
+    query = "SELECT * FROM features LEFT JOIN projects ON features.project_id=projects.id WHERE features.project_id=%s"
+    args = (project_id,)
+    async with conn.cursor(aiomysql.DictCursor) as cursor:
+        await cursor.execute(query, args)
+        return await cursor.fetchall()
+
+
+async def update_feature_db(
+    conn: aiomysql.Connection,
+    name: str | None = None,
+    description: str | None = None,
+    deadline: datetime | None = None,
+):
+    assert (
+        name is not None or description is not None or deadline is not None
+    ), "All arguments cannot be None at the same time"
+    query = (
+        "UPDATE features SET name={arg1}, description={arg2} deadline={arg3}".format(
+            arg1="%s" if name is not None else "name",
+            arg2="%s" if description is not None else "description",
+            arg3="%s" if deadline is not None else "deadline",
+        )
+    )
+    args = []
+    if name is not None:
+        args.append(name)
+
+    if description is not None:
+        args.append(description)
+
+    if deadline is not None:
+        args.append(deadline)
+
+    async with conn.cursor() as cursor:
+        await cursor.execute(query, tuple(args))
+        await conn.commit()
+
+
+async def delete_feature_db(
+    conn: aiomysql.Connection,
+    feature_id: int,
+):
+    query = "DELETE FROM features WHERE id = %s"
+    args = (feature_id,)
+    async with conn.cursor() as cursor:
+        await cursor.execute(query, args)
+        await conn.commit()

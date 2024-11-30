@@ -26,3 +26,18 @@ def role_has_permission(roles: List[Dict], permission: str) -> bool:
             has_permission = True
             break
     return has_permission
+
+
+def query_params(url: str) -> Dict[str, str]:
+    """Extract the query parameters from a url"""
+    res: dict = {}
+    split = url.split("?")
+    if len(split) < 2:
+        return res
+    params = split[1]
+    params = params.split("&")
+    for value in params:
+        kv = value.split("=")
+        res[kv[0]] = str(kv[1])
+
+    return res
