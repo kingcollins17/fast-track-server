@@ -36,7 +36,7 @@ CREATE TABLE `accounts` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +45,7 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (6,'techie99','techie99@gmail.com','Collins Nnanna','$2b$12$6HaHG0sz/qHWddAk.t2Bt.mrngFr0bXKe48lce8dga3/YikzAx0Mm',1,1,NULL,'2024-11-29 14:49:51','2024-11-29 14:49:51');
+INSERT INTO `accounts` VALUES (6,'techie99','techie99@gmail.com','Collins Nnanna','$2b$12$6HaHG0sz/qHWddAk.t2Bt.mrngFr0bXKe48lce8dga3/YikzAx0Mm',1,1,NULL,'2024-11-29 14:49:51','2024-11-29 14:49:51'),(7,'user365','user@example.com','Example User','$2b$12$1yyOKipjfACNFBmzTvDY1.AIEbCDxtqo3vgY6aZNdaVMvdKz3A3c2',1,1,NULL,'2024-11-30 13:22:35','2024-11-30 13:22:35');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,7 +133,7 @@ CREATE TABLE `features` (
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`),
   CONSTRAINT `features_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,6 +142,7 @@ CREATE TABLE `features` (
 
 LOCK TABLES `features` WRITE;
 /*!40000 ALTER TABLE `features` DISABLE KEYS */;
+INSERT INTO `features` VALUES (2,'Authentication','','2024-11-30 15:29:56','2024-11-30 15:29:56','2024-12-30 14:29:30',3),(3,'Job Application','A zider should be able to apply to Jobs and book Jobs','2024-11-30 15:31:31','2024-11-30 15:31:31','2024-12-30 14:29:30',3);
 /*!40000 ALTER TABLE `features` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -224,7 +225,7 @@ CREATE TABLE `member_roles` (
   KEY `role_id` (`role_id`),
   CONSTRAINT `member_roles_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `organization_members` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `member_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `organization_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -233,7 +234,7 @@ CREATE TABLE `member_roles` (
 
 LOCK TABLES `member_roles` WRITE;
 /*!40000 ALTER TABLE `member_roles` DISABLE KEYS */;
-INSERT INTO `member_roles` VALUES (13,13,16);
+INSERT INTO `member_roles` VALUES (13,13,16),(14,16,17);
 /*!40000 ALTER TABLE `member_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -254,7 +255,7 @@ CREATE TABLE `organization_members` (
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `organization_members_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `organization_members_ibfk_2` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,7 +264,7 @@ CREATE TABLE `organization_members` (
 
 LOCK TABLES `organization_members` WRITE;
 /*!40000 ALTER TABLE `organization_members` DISABLE KEYS */;
-INSERT INTO `organization_members` VALUES (13,6,13,'2024-11-29 14:50:16');
+INSERT INTO `organization_members` VALUES (13,6,13,'2024-11-29 14:50:16'),(16,7,13,'2024-11-30 13:54:48');
 /*!40000 ALTER TABLE `organization_members` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -376,7 +377,7 @@ CREATE TABLE `projects` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -385,6 +386,7 @@ CREATE TABLE `projects` (
 
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
+INSERT INTO `projects` VALUES (3,'Zidepeople Mobile App','2025-11-30 12:18:07','2024-11-30 13:20:34','2024-11-30 13:20:34',13);
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -522,14 +524,13 @@ DROP TABLE IF EXISTS `teams`;
 CREATE TABLE `teams` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `team_name` varchar(255) NOT NULL,
-  `type` enum('default','standard') DEFAULT 'default',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `project_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_teams_projects` (`project_id`),
   CONSTRAINT `fk_teams_projects` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -538,6 +539,7 @@ CREATE TABLE `teams` (
 
 LOCK TABLES `teams` WRITE;
 /*!40000 ALTER TABLE `teams` DISABLE KEYS */;
+INSERT INTO `teams` VALUES (1,'POD 1','2024-11-30 14:15:19','2024-11-30 14:15:19',3),(2,'POD 4','2024-11-30 14:18:00','2024-11-30 14:18:00',3);
 /*!40000 ALTER TABLE `teams` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -550,4 +552,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-29 15:04:32
+-- Dump completed on 2024-11-30 15:34:38
