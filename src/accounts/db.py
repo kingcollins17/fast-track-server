@@ -11,16 +11,17 @@ async def create_account_db(
     fullname: Union[str, None] = None,
     password: Union[str, None] = None,
     fcm_reg_token: Union[str, None] = None,
-):
+) -> int | None:
     password = get_password_hash(password)
     async with connection.cursor() as cursor:
         query = "INSERT INTO accounts (username, email, password, fullname, fcm_reg_token) VALUES (%s, %s, %s, %s, %s)"
         args = (username, email, password, fullname, fcm_reg_token)
         await cursor.execute(query, args)
         await connection.commit()
+        return cursor.lastrowid
 
 
-async def fetch_account(
+async def fetch_account_db(
     connection: aiomysql.Connection,
     account_id: int | None = None,
     username: str | None = None,

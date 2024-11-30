@@ -22,7 +22,7 @@ async def sign_in(
             username = data.username.strip()
         if data.email is not None:
             email = data.email.strip()
-        account = await fetch_account(conn, username=username, email=email)
+        account = await fetch_account_db(conn, username=username, email=email)
         if not account:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
@@ -71,7 +71,7 @@ async def authorize_swagger(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     conn: Annotated[aiomysql.Connection, Depends(db_connection)],
 ) -> Token:
-    account = await fetch_account(conn, username=form_data.username.strip())
+    account = await fetch_account_db(conn, username=form_data.username.strip())
     if not account:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
