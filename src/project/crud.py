@@ -246,7 +246,7 @@ async def update_project(
     data: UpdateProjectPayload,
     account: Annotated[Dict, Depends(get_current_user)],
     conn: Annotated[aiomysql.Connection, Depends(db_connection)],
-):
+) -> ResponseModel:
     try:
         member = await find_organization_member_db(
             conn,
@@ -290,7 +290,6 @@ async def update_project(
 async def delete_project(
     organization_id: int,
     project_id: int,
-    data: UpdateProjectPayload,
     account: Annotated[Dict, Depends(get_current_user)],
     conn: Annotated[aiomysql.Connection, Depends(db_connection)],
 ) -> ResponseModel:

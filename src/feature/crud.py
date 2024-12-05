@@ -9,7 +9,7 @@ async def fetch_features(
     project_id: int,
     conn: Annotated[aiomysql.Connection, Depends(db_connection)],
     account: Annotated[Dict, Depends(get_current_user)],
-):
+) -> ResponseModel[List[Dict]]:
     try:
         data = await fetch_features_db(conn, project_id)
         return ResponseModel(data=data)
@@ -32,7 +32,7 @@ async def create_new_feature(
     data: CreateFeaturePayload,
     conn: Annotated[aiomysql.Connection, Depends(db_connection)],
     account: Annotated[Dict, Depends(get_current_user)],
-):
+) -> ResponseModel:
     try:
         member = await find_organization_member_db(
             conn,
