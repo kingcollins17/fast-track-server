@@ -8,6 +8,7 @@ from src.organization.organization import org
 from src.project.project import project
 from src.teams.teams import teams
 from src.feature.feature import feature
+from src.task.task import tasks
 
 middleware = [
     Middleware(
@@ -49,3 +50,4 @@ app.include_router(org)
 app.include_router(project)
 app.include_router(teams)
 app.include_router(feature)
+app.include_router(tasks)

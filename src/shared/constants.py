@@ -14,6 +14,7 @@ class Tags(Enum):
     project = "General Project Management Features"
     teams = "Team Management"
     feature = "Project Features"
+    tasks = "Task Management"
 
 
 class Mode(Enum):

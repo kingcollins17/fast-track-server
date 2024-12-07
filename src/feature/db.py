@@ -20,10 +20,20 @@ async def create_feature_db(
 
 async def fetch_features_db(
     conn: aiomysql.Connection,
-    project_id: int,
+    organization_id: int | None = None,
+    project_id: int | None = None,
+    limit: int = 200,
+    offset: int = 0,
 ) -> List[Dict]:
-    query = "SELECT * FROM features LEFT JOIN projects ON features.project_id=projects.id WHERE features.project_id=%s"
-    args = (project_id,)
+    assert (
+        organization_id is not None or project_id is not None
+    ), "Must be called with at least 1 Argument"
+    query = "SELECT * FROM features LEFT JOIN projects ON features.project_id=projects.id WHERE {column}=%s".format(
+        column="projects.organization_id"
+        if organization_id is not None
+        else "features.project_id"
+    )
+    args = (organization_id or project_id,)
     async with conn.cursor(aiomysql.DictCursor) as cursor:
         await cursor.execute(query, args)
         return await cursor.fetchall()

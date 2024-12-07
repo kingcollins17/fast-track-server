@@ -1,3 +1,6 @@
+drop database fast_track_db;
+create database fast_track_db;
+use fast_track_db;
 -- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
 --
 -- Host: localhost    Database: fast_track_db
@@ -36,7 +39,7 @@ CREATE TABLE `accounts` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,74 +48,8 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (6,'techie99','techie99@gmail.com','Collins Nnanna','$2b$12$6HaHG0sz/qHWddAk.t2Bt.mrngFr0bXKe48lce8dga3/YikzAx0Mm',1,1,NULL,'2024-11-29 14:49:51','2024-11-29 14:49:51'),(7,'user365','user@example.com','Example User','$2b$12$1yyOKipjfACNFBmzTvDY1.AIEbCDxtqo3vgY6aZNdaVMvdKz3A3c2',1,1,NULL,'2024-11-30 13:22:35','2024-11-30 13:22:35');
+INSERT INTO `accounts` VALUES (8,'techie99','techie99@gmail.com','Collins Nnanna','$2b$12$D4dquC5Z9j5OY.WYMwKDgeEopLYxhuCB3Kor0j13NkvhqJVVrjYxi',1,1,NULL,'2024-12-07 17:14:30','2024-12-07 17:14:30'),(9,'jondoe','jondoe@gmail.com','Jon Doe','$2b$12$B5PryhyYxHh3TZtzL/.iLu0XEu3t2th3nQndIqiSqS9txcPXwxCnK',1,1,NULL,'2024-12-07 17:43:34','2024-12-07 17:43:34'),(10,'janedoe','janedoe@gmail.com','Jane Doe','$2b$12$27qwkmb217nkG.ub/3gXM.afVHhWhxgwX0MjG0g7o/Kx7B/xisNg2',1,1,NULL,'2024-12-07 17:43:46','2024-12-07 17:45:01');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `comment_tags`
---
-
-DROP TABLE IF EXISTS `comment_tags`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `comment_tags` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `account_id` int unsigned NOT NULL,
-  `comment_id` int unsigned NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `account_id` (`account_id`),
-  KEY `comment_id` (`comment_id`),
-  CONSTRAINT `comment_tags_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `comment_tags_ibfk_2` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `comment_tags`
---
-
-LOCK TABLES `comment_tags` WRITE;
-/*!40000 ALTER TABLE `comment_tags` DISABLE KEYS */;
-/*!40000 ALTER TABLE `comment_tags` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `comments`
---
-
-DROP TABLE IF EXISTS `comments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `comments` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `comment` text,
-  `commenter_id` int unsigned NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `feature_id` int unsigned DEFAULT NULL,
-  `issue_id` int unsigned DEFAULT NULL,
-  `task_id` int unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `feature_id` (`feature_id`),
-  KEY `issue_id` (`issue_id`),
-  KEY `task_id` (`task_id`),
-  KEY `commenter_id` (`commenter_id`),
-  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`feature_id`) REFERENCES `features` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`issue_id`) REFERENCES `issues` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `comments_ibfk_3` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `comments_ibfk_4` FOREIGN KEY (`commenter_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `comments`
---
-
-LOCK TABLES `comments` WRITE;
-/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -133,7 +70,7 @@ CREATE TABLE `features` (
   PRIMARY KEY (`id`),
   KEY `project_id` (`project_id`),
   CONSTRAINT `features_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,71 +79,8 @@ CREATE TABLE `features` (
 
 LOCK TABLES `features` WRITE;
 /*!40000 ALTER TABLE `features` DISABLE KEYS */;
-INSERT INTO `features` VALUES (2,'Authentication','','2024-11-30 15:29:56','2024-11-30 15:29:56','2024-12-30 14:29:30',3),(3,'Job Application','A zider should be able to apply to Jobs and book Jobs','2024-11-30 15:31:31','2024-11-30 15:31:31','2024-12-30 14:29:30',3);
+INSERT INTO `features` VALUES (4,'Accounts Managment and Authentication','User Should be able to Login end to end','2024-12-07 19:12:57','2024-12-07 19:12:57','2025-11-07 18:11:58',4),(5,'Authentication','Login and Register','2024-12-07 19:47:22','2024-12-07 19:47:22','2024-12-07 18:46:58',5),(6,'Applications and Inventory','Login and Register','2024-12-07 19:47:59','2024-12-07 19:47:59','2024-12-07 18:46:58',5);
 /*!40000 ALTER TABLE `features` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `issue_dependencies`
---
-
-DROP TABLE IF EXISTS `issue_dependencies`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `issue_dependencies` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `issue_id` int unsigned NOT NULL,
-  `depended_issue_id` int unsigned NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `issue_id` (`issue_id`,`depended_issue_id`),
-  KEY `depended_issue_id` (`depended_issue_id`),
-  CONSTRAINT `issue_dependencies_ibfk_1` FOREIGN KEY (`issue_id`) REFERENCES `issues` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `issue_dependencies_ibfk_2` FOREIGN KEY (`depended_issue_id`) REFERENCES `issues` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `issue_dependencies`
---
-
-LOCK TABLES `issue_dependencies` WRITE;
-/*!40000 ALTER TABLE `issue_dependencies` DISABLE KEYS */;
-/*!40000 ALTER TABLE `issue_dependencies` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `issues`
---
-
-DROP TABLE IF EXISTS `issues`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `issues` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `description` text,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `deadline` datetime DEFAULT NULL,
-  `assigned_team_id` int unsigned NOT NULL,
-  `feature_id` int unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `assigned_team_id` (`assigned_team_id`),
-  KEY `feature_id` (`feature_id`),
-  CONSTRAINT `issues_ibfk_1` FOREIGN KEY (`assigned_team_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `issues_ibfk_2` FOREIGN KEY (`feature_id`) REFERENCES `features` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `issues`
---
-
-LOCK TABLES `issues` WRITE;
-/*!40000 ALTER TABLE `issues` DISABLE KEYS */;
-/*!40000 ALTER TABLE `issues` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -225,7 +99,7 @@ CREATE TABLE `member_roles` (
   KEY `role_id` (`role_id`),
   CONSTRAINT `member_roles_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `organization_members` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `member_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `organization_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -234,7 +108,7 @@ CREATE TABLE `member_roles` (
 
 LOCK TABLES `member_roles` WRITE;
 /*!40000 ALTER TABLE `member_roles` DISABLE KEYS */;
-INSERT INTO `member_roles` VALUES (13,13,16),(14,16,17);
+INSERT INTO `member_roles` VALUES (15,17,18),(16,18,19),(17,19,19);
 /*!40000 ALTER TABLE `member_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -255,7 +129,7 @@ CREATE TABLE `organization_members` (
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `organization_members_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `organization_members_ibfk_2` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -264,7 +138,7 @@ CREATE TABLE `organization_members` (
 
 LOCK TABLES `organization_members` WRITE;
 /*!40000 ALTER TABLE `organization_members` DISABLE KEYS */;
-INSERT INTO `organization_members` VALUES (13,6,13,'2024-11-29 14:50:16'),(16,7,13,'2024-11-30 13:54:48');
+INSERT INTO `organization_members` VALUES (17,8,14,'2024-12-07 17:15:17'),(18,10,14,'2024-12-07 17:47:49'),(19,9,14,'2024-12-07 17:48:13');
 /*!40000 ALTER TABLE `organization_members` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -289,7 +163,7 @@ CREATE TABLE `organization_roles` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `organization_roles_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -298,7 +172,7 @@ CREATE TABLE `organization_roles` (
 
 LOCK TABLES `organization_roles` WRITE;
 /*!40000 ALTER TABLE `organization_roles` DISABLE KEYS */;
-INSERT INTO `organization_roles` VALUES (16,'admin',1,1,1,1,1,'2024-11-29 14:50:16','2024-11-29 14:50:16',13),(17,'Intern',0,0,0,0,0,'2024-11-29 14:55:18','2024-11-29 14:55:18',13);
+INSERT INTO `organization_roles` VALUES (18,'admin',1,1,1,1,1,'2024-12-07 17:15:17','2024-12-07 17:15:17',14),(19,'Junior',0,0,0,0,0,'2024-12-07 17:16:05','2024-12-07 17:16:05',14);
 /*!40000 ALTER TABLE `organization_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -321,7 +195,7 @@ CREATE TABLE `organizations` (
   PRIMARY KEY (`id`),
   KEY `owner_id` (`owner_id`),
   CONSTRAINT `organizations_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -330,7 +204,7 @@ CREATE TABLE `organizations` (
 
 LOCK TABLES `organizations` WRITE;
 /*!40000 ALTER TABLE `organizations` DISABLE KEYS */;
-INSERT INTO `organizations` VALUES (13,'Zidepeople','enterprise',100,4,6,'2024-11-29 14:50:16','2024-11-29 14:50:16');
+INSERT INTO `organizations` VALUES (14,'Zidepeople','enterprise',100,4,8,'2024-12-07 17:15:17','2024-12-07 17:15:17');
 /*!40000 ALTER TABLE `organizations` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -342,7 +216,7 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `CreateAdminRole` AFTER INSERT ON `organizations` FOR EACH ROW BEGIN
+/*!50003 CREATE TRIGGER `CreateAdminRole` AFTER INSERT ON `organizations` FOR EACH ROW BEGIN
      DECLARE role_id INT;
      DECLARE member_id INT;
      INSERT INTO 
@@ -377,7 +251,7 @@ CREATE TABLE `projects` (
   PRIMARY KEY (`id`),
   KEY `organization_id` (`organization_id`),
   CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -386,7 +260,7 @@ CREATE TABLE `projects` (
 
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-INSERT INTO `projects` VALUES (3,'Zidepeople Mobile App','2025-11-30 12:18:07','2024-11-30 13:20:34','2024-11-30 13:20:34',13);
+INSERT INTO `projects` VALUES (4,'Mobile App','2025-12-07 16:18:00','2024-12-07 17:18:28','2024-12-07 17:18:28',14),(5,'Website','2024-12-07 18:46:24','2024-12-07 19:46:37','2024-12-07 19:46:37',14);
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -399,15 +273,13 @@ DROP TABLE IF EXISTS `task_dependencies`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `task_dependencies` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `task_id` int unsigned NOT NULL,
-  `depended_task_id` int unsigned NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `depender_id` int unsigned NOT NULL,
+  `depended_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `task_id` (`task_id`,`depended_task_id`),
-  KEY `depended_task_id` (`depended_task_id`),
-  CONSTRAINT `task_dependencies_ibfk_1` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `task_dependencies_ibfk_2` FOREIGN KEY (`depended_task_id`) REFERENCES `tasks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `depender_id` (`depender_id`),
+  KEY `depended_id` (`depended_id`),
+  CONSTRAINT `task_dependencies_ibfk_1` FOREIGN KEY (`depender_id`) REFERENCES `tasks` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `task_dependencies_ibfk_2` FOREIGN KEY (`depended_id`) REFERENCES `tasks` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -421,37 +293,6 @@ LOCK TABLES `task_dependencies` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `task_requirements`
---
-
-DROP TABLE IF EXISTS `task_requirements`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `task_requirements` (
-  `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `requirement` varchar(255) DEFAULT NULL,
-  `status` enum('pending','submitted','passed','failed') DEFAULT NULL,
-  `resources` json DEFAULT NULL,
-  `task_id` int unsigned NOT NULL,
-  `assignee_id` int unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `task_id` (`task_id`),
-  KEY `assignee_id` (`assignee_id`),
-  CONSTRAINT `task_requirements_ibfk_1` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `task_requirements_ibfk_2` FOREIGN KEY (`assignee_id`) REFERENCES `accounts` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `task_requirements`
---
-
-LOCK TABLES `task_requirements` WRITE;
-/*!40000 ALTER TABLE `task_requirements` DISABLE KEYS */;
-/*!40000 ALTER TABLE `task_requirements` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `tasks`
 --
 
@@ -460,19 +301,24 @@ DROP TABLE IF EXISTS `tasks`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tasks` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `status` enum('pending','todo','in_progress','to_be_reviewed','in_review','done') DEFAULT NULL,
-  `description` text,
-  `deadline` datetime DEFAULT NULL,
+  `status` enum('pending','todo','review','done') DEFAULT 'pending',
+  `deadline` datetime NOT NULL,
+  `completed_at` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `assignee_id` int unsigned NOT NULL,
-  `issue_id` int unsigned NOT NULL,
+  `feature_id` int unsigned NOT NULL,
+  `parent_task_id` int unsigned DEFAULT NULL,
+  `assigned_team_id` int unsigned DEFAULT NULL,
+  `assigned_account_id` int unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `assignee_id` (`assignee_id`),
-  KEY `issue_id` (`issue_id`),
-  CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`assignee_id`) REFERENCES `accounts` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `tasks_ibfk_2` FOREIGN KEY (`issue_id`) REFERENCES `issues` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `feature_id` (`feature_id`),
+  KEY `parent_task_id` (`parent_task_id`),
+  KEY `assigned_team_id` (`assigned_team_id`),
+  KEY `assigned_account_id` (`assigned_account_id`),
+  CONSTRAINT `tasks_ibfk_1` FOREIGN KEY (`feature_id`) REFERENCES `features` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `tasks_ibfk_2` FOREIGN KEY (`parent_task_id`) REFERENCES `tasks` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `tasks_ibfk_3` FOREIGN KEY (`assigned_team_id`) REFERENCES `teams` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `tasks_ibfk_4` FOREIGN KEY (`assigned_account_id`) REFERENCES `accounts` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -502,7 +348,7 @@ CREATE TABLE `team_members` (
   KEY `account_id` (`account_id`),
   CONSTRAINT `team_members_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `team_members_ibfk_2` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -511,6 +357,7 @@ CREATE TABLE `team_members` (
 
 LOCK TABLES `team_members` WRITE;
 /*!40000 ALTER TABLE `team_members` DISABLE KEYS */;
+INSERT INTO `team_members` VALUES (3,5,10,'2024-12-07 18:02:02'),(5,5,9,'2024-12-07 18:55:23'),(6,6,9,'2024-12-07 18:59:28'),(7,6,10,'2024-12-07 18:59:39');
 /*!40000 ALTER TABLE `team_members` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -526,11 +373,11 @@ CREATE TABLE `teams` (
   `team_name` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `project_id` int unsigned NOT NULL,
+  `organization_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_teams_projects` (`project_id`),
-  CONSTRAINT `fk_teams_projects` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_teams_projects` (`organization_id`),
+  CONSTRAINT `fk_teams_organizations` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -539,7 +386,7 @@ CREATE TABLE `teams` (
 
 LOCK TABLES `teams` WRITE;
 /*!40000 ALTER TABLE `teams` DISABLE KEYS */;
-INSERT INTO `teams` VALUES (1,'POD 1','2024-11-30 14:15:19','2024-11-30 14:15:19',3),(2,'POD 4','2024-11-30 14:18:00','2024-11-30 14:18:00',3);
+INSERT INTO `teams` VALUES (5,'POD 1','2024-12-07 17:19:16','2024-12-07 17:19:16',14),(6,'POD 4','2024-12-07 18:59:12','2024-12-07 18:59:12',14);
 /*!40000 ALTER TABLE `teams` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -552,4 +399,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-30 15:34:38
+-- Dump completed on 2024-12-07 20:30:47

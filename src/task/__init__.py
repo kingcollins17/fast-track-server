@@ -8,6 +8,6 @@ from src.dependencies import db_connection as connection
 from src.dependencies import *
 from src.db import *
 from .db import *
-from .team_members_db import *
 
-teams = APIRouter(prefix="/teams", tags=[Tags.teams])
+
+tasks = APIRouter(prefix="/tasks", tags=[Tags.tasks])

@@ -41,3 +41,32 @@ def query_params(url: str) -> Dict[str, str]:
         res[kv[0]] = str(kv[1])
 
     return res
+
+
+Grouping = Tuple[Dict[str, Any], List[Dict]]
+
+
+def group_list_data(
+    data: List[Dict[str, Any]],
+    grouping_key: str,
+    *label_keys,
+) -> List[Dict[str, Any]]:
+    """grouping_key must be a valid key in all the dictionaries inside the data list.
+    The value of grouping key must be an integer and the value of label key must be a string
+    """
+    result: Dict[int, Grouping] = {}
+    for value in data:
+        grouping_value = value[grouping_key]
+        group = result.get(grouping_value)
+        if group is None:
+            group = ({key: value[key] for key in label_keys}, [])
+            result[grouping_value] = group
+        group[1].append(value)
+
+    return [{**i[0], "data": i[1]} for i in result.values()]
+
+
+def swap_keys(data: Dict[str, Any], key_swaps: Dict[str, str]):
+    for key, swap in key_swaps.items():
+        data[swap] = data.pop(key)
+    return data

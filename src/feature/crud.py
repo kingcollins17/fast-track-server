@@ -4,15 +4,102 @@ from src.organization.roles_db import fetch_member_assigned_roles_db
 from . import *
 
 
-@feature.get("/{project_id}")
+@feature.get(
+    "/",
+    responses=example_response(
+        status=200,
+        example={
+            "detail": "Request successful",
+            "data": [
+                {
+                    "project_id": 4,
+                    "project_name": "Mobile App",
+                    "project_deadline": "2025-12-07T16:18:00",
+                    "data": [
+                        {
+                            "id": 4,
+                            "name": "Accounts Managment and Authentication",
+                            "description": "User Should be able to Login end to end",
+                            "created_at": "2024-12-07T19:12:57",
+                            "updated_at": "2024-12-07T19:12:57",
+                            "deadline": "2025-11-07T18:11:58",
+                            "project_id": 4,
+                            "project_name": "Mobile App",
+                            "organization_id": 14,
+                            "project_deadline": "2025-12-07T16:18:00",
+                            "project_created_at": "2024-12-07T17:18:28",
+                            "project_updated_at": "2024-12-07T17:18:28",
+                        }
+                    ],
+                },
+                {
+                    "project_id": 5,
+                    "project_name": "Website",
+                    "project_deadline": "2024-12-07T18:46:24",
+                    "data": [
+                        {
+                            "id": 5,
+                            "name": "Authentication",
+                            "description": "Login and Register",
+                            "created_at": "2024-12-07T19:47:22",
+                            "updated_at": "2024-12-07T19:47:22",
+                            "deadline": "2024-12-07T18:46:58",
+                            "project_id": 5,
+                            "project_name": "Website",
+                            "organization_id": 14,
+                            "project_deadline": "2024-12-07T18:46:24",
+                            "project_created_at": "2024-12-07T19:46:37",
+                            "project_updated_at": "2024-12-07T19:46:37",
+                        },
+                        {
+                            "id": 6,
+                            "name": "Applications and Inventory",
+                            "description": "Login and Register",
+                            "created_at": "2024-12-07T19:47:59",
+                            "updated_at": "2024-12-07T19:47:59",
+                            "deadline": "2024-12-07T18:46:58",
+                            "project_id": 5,
+                            "project_name": "Website",
+                            "organization_id": 14,
+                            "project_deadline": "2024-12-07T18:46:24",
+                            "project_created_at": "2024-12-07T19:46:37",
+                            "project_updated_at": "2024-12-07T19:46:37",
+                        },
+                    ],
+                },
+            ],
+            "request_at": "2024-12-07T20:15:03.027631",
+        },
+    ),
+)
 async def fetch_features(
-    project_id: int,
     conn: Annotated[aiomysql.Connection, Depends(db_connection)],
     account: Annotated[Dict, Depends(get_current_user)],
+    project_id: int | None = None,
+    organization_id: int | None = None,
 ) -> ResponseModel[List[Dict]]:
     try:
-        data = await fetch_features_db(conn, project_id)
-        return ResponseModel(data=data)
+        data = await fetch_features_db(
+            conn,
+            project_id=project_id,
+            organization_id=organization_id,
+        )
+        swaps = {
+            "projects.deadline": "project_deadline",
+            "projects.created_at": "project_created_at",
+            "projects.updated_at": "project_updated_at",
+            "projects.id": "project_id",
+        }
+        data = [swap_keys(value, swaps) for value in data]
+        grouped_data = group_list_data(
+            data,
+            "project_id",
+            "project_id",
+            "project_name",
+            "project_deadline",
+        )
+
+        return ResponseModel(data=grouped_data)
     except Exception as e:
         if isinstance(e, HTTPException):
             raise e
