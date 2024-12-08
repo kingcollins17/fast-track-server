@@ -1,3 +1,6 @@
+drop database fast_track_db;
+create database fast_track_db;
+use fast_track_db;
 -- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
 --
 -- Host: localhost    Database: fast_track_db
@@ -213,7 +216,7 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `CreateAdminRole` AFTER INSERT ON `organizations` FOR EACH ROW BEGIN
+/*!50003 CREATE TRIGGER `CreateAdminRole` AFTER INSERT ON `organizations` FOR EACH ROW BEGIN
      DECLARE role_id INT;
      DECLARE member_id INT;
      INSERT INTO 
