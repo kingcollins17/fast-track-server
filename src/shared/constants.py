@@ -9,11 +9,11 @@ null = None
 
 
 class Tags(Enum):
-    accounts_mgt = "Accounts & Management"
+    accounts_mgt = "Accounts Management (Sign In, Sign up)"
     organization = "Organization Management"
-    project = "General Project Management Features"
+    project = "Project Management"
     teams = "Team Management"
-    feature = "Project Features"
+    feature = "Features Management"
     tasks = "Task Management"
 
 

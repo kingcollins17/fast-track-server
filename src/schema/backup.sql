@@ -1,6 +1,3 @@
-drop database fast_track_db;
-create database fast_track_db;
-use fast_track_db;
 -- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
 --
 -- Host: localhost    Database: fast_track_db
@@ -216,7 +213,7 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE TRIGGER `CreateAdminRole` AFTER INSERT ON `organizations` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `CreateAdminRole` AFTER INSERT ON `organizations` FOR EACH ROW BEGIN
      DECLARE role_id INT;
      DECLARE member_id INT;
      INSERT INTO 
@@ -301,7 +298,10 @@ DROP TABLE IF EXISTS `tasks`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tasks` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text,
   `status` enum('pending','todo','review','done') DEFAULT 'pending',
+  `requirements` json DEFAULT NULL,
   `deadline` datetime NOT NULL,
   `completed_at` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -319,7 +319,7 @@ CREATE TABLE `tasks` (
   CONSTRAINT `tasks_ibfk_2` FOREIGN KEY (`parent_task_id`) REFERENCES `tasks` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `tasks_ibfk_3` FOREIGN KEY (`assigned_team_id`) REFERENCES `teams` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `tasks_ibfk_4` FOREIGN KEY (`assigned_account_id`) REFERENCES `accounts` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -328,6 +328,7 @@ CREATE TABLE `tasks` (
 
 LOCK TABLES `tasks` WRITE;
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
+INSERT INTO `tasks` VALUES (3,'Sign-in and Sign-up',NULL,'pending','{}','2025-10-08 16:41:33',NULL,'2024-12-08 17:48:42','2024-12-08 17:48:42',4,NULL,5,NULL),(4,'Sign In UI Implementation',NULL,'pending','{}','2025-12-08 16:53:25',NULL,'2024-12-08 17:56:32','2024-12-08 17:56:32',4,3,NULL,10);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -399,4 +400,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-07 20:30:47
+-- Dump completed on 2024-12-08 18:28:48

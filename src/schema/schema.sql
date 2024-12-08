@@ -219,7 +219,10 @@ DROP TABLE IF EXISTS `tasks`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tasks` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text,
   `status` enum('pending','todo','review','done') DEFAULT 'pending',
+  `requirements` json DEFAULT NULL,
   `deadline` datetime NOT NULL,
   `completed_at` datetime DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -237,7 +240,7 @@ CREATE TABLE `tasks` (
   CONSTRAINT `tasks_ibfk_2` FOREIGN KEY (`parent_task_id`) REFERENCES `tasks` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `tasks_ibfk_3` FOREIGN KEY (`assigned_team_id`) REFERENCES `teams` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `tasks_ibfk_4` FOREIGN KEY (`assigned_account_id`) REFERENCES `accounts` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -288,4 +291,4 @@ CREATE TABLE `teams` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-07 20:30:48
+-- Dump completed on 2024-12-08 18:28:48
